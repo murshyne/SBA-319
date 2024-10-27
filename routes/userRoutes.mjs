@@ -7,7 +7,6 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   // Log the incoming request
   console.log("Request Body:", req.body);
-  body;
 
   // Validate the request body
   const { username, email } = req.body;
