@@ -2,22 +2,25 @@
 import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import connectDB from "./db/conn.mjs";
+import recipeRoutes from "./routes/recipeRoutes.mjs";
 
-// SetUps
+// Setups
 const app = express();
 dotenv.config();
 let PORT = process.env.PORT || 3000;
 
-//Connect to DB
-connectDB()
+// Connect to DB
+connectDB();
 
-// middleware
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.json());
 
-//Routes
+// Routes
+app.use("/recipes", recipeRoutes);
 
-// listener
+// Listener
 app.listen(PORT, () => {
-  console.log(`Server Running on Port: \${PORT}`);
-  });
+  console.log(`Server Running on Port: ${PORT}`);
+});
