@@ -1,16 +1,14 @@
 import express from "express";
 import Recipe from "../models/recipeSchema.mjs";
-import User from "../models/userSchema.mjs";
-import Ingredient from "../models/ingredientSchema.mjs";
+
 const router = express.Router();
 
 // Create Recipe
 router.post("/", async (req, res) => {
   try {
-    const { name, userId, ingredients, year } = req.body;
-    const newRecipe = new Recipe({ name, userId, ingredients, year });
+    const newRecipe = new Recipe(req.body);
     await newRecipe.save();
-    res.json(newRecipe);
+    res.status(201).json(newRecipe);
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "Server Error" });
@@ -20,7 +18,7 @@ router.post("/", async (req, res) => {
 // Read Recipes
 router.get("/", async (req, res) => {
   try {
-    const allRecipes = await Recipe.find({}).populate("userId ingredients");
+    const allRecipes = await Recipe.find({});
     res.json(allRecipes);
   } catch (err) {
     console.error(err);
