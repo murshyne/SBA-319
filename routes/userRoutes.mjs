@@ -1,16 +1,27 @@
 import express from "express";
-import User from "../models/userSchema.mjs"; // Adjust as necessary
+import User from "../models/userSchema.mjs";
+
 const router = express.Router();
 
 // Create users
 router.post("/", async (req, res) => {
+  // Log the incoming request
+  console.log("Request Body:", req.body);
+  body;
+
+  // Validate the request body
+  const { username, email } = req.body;
+  if (!username || !email) {
+    return res.status(400).json({ msg: "Username and email are required." });
+  }
+
   try {
     const newUser = new User(req.body);
     await newUser.save();
     res.status(201).json(newUser);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ msg: "Server Error" });
+    res.status(500).json({ msg: "Server Error", error: err.message });
   }
 });
 
