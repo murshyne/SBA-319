@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # SBA-319 LAB
 
 # Recipe Management API
